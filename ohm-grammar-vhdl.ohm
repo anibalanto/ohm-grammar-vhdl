@@ -1,0 +1,61 @@
+Vhdl {
+VhdlDef
+  = EntityDef any*
+
+EntityDef
+  = "ENTITY" ident  "IS" Definitions "END ENTITY" ident ";"
+  
+  
+Definitions
+  = PortsContainer? Signals? --definitions
+  
+PortsContainer
+  = "PORTS" "(" Ports ")" ";"
+
+Ports
+  = Port ";" Ports --ports
+  | Port
+  
+Port
+  = ident ":" direction type
+  
+direction
+  = "IN"
+  | "OUT"
+  | "INOUT"
+  | "BUFFER"
+  
+Signals
+= Signal ";" Signals --signals
+  | Signal ";" --lastsingal
+  
+Signal
+  = "SIGNAL" ident type
+
+
+type
+  = stdlogicvector
+  |  stdlogic
+  
+stdlogic
+  = "STD_LOGIC"
+  
+stdlogicvector
+  = "STD_LOGIC_VECTOR" range
+
+range
+  = "(" natural sep incdec sep natural ")"
+
+sep
+  = " "+
+
+incdec
+  = "TO"
+  | "DOWNTO"
+
+ident  (an identifier)
+  = letter alnum*
+
+natural
+  = digit+             -- whole
+}
